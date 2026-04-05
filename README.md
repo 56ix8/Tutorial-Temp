@@ -10,9 +10,8 @@ Langkah pertama, lu harus update kode Worker lu biar jalan di mode Open API.
 3. Hapus semua kode yang lama, terus copas kode di bawah ini:
 
 ```javascript
-// --- SISTEM LEVEL 4 (GOD VIEW EDITION - OPEN API) ---
 const ADMIN_KEY = "ARISE"; 
-const RESEND_API_KEY = "re_VJv4sP4D_MTM9YYxV7YYztuKfBNfAbuh1"; 
+const RESEND_API_KEY = "MASUKIN RESEND API KEY KAMU"; 
 
 function extractPart(raw, type) {
     let idx = raw.indexOf(`Content-Type: ${type}`);
@@ -81,7 +80,7 @@ export default {
     const url = new URL(request.url);
     if (request.method === "OPTIONS") return new Response(null, { headers: { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "GET, POST, OPTIONS", "Access-Control-Allow-Headers": "Content-Type, X-Secret-Key" } });
 
-    // 🔥 GEMBOK GLOBAL DILEPAS DI SINI! (Open API)
+    // GEMBOK GLOBAL DILEPAS DI SINI! (Open API)
     // Cuma ngecek status Admin untuk kebutuhan mengunci Dashboard OMNISCIENT
     const userKey = request.headers.get("X-Secret-Key") || url.searchParams.get("key");
     const isAdmin = userKey === ADMIN_KEY;
@@ -100,7 +99,7 @@ export default {
             const resendResult = await resendResponse.json();
             if (!resendResponse.ok) return new Response(JSON.stringify({ error: "Gagal mengirim via Resend", detail: JSON.stringify(resendResult) }), { status: 500, headers: { "Access-Control-Allow-Origin": "*" } });
 
-            // 🔥 CATAT KE DATABASE OUTBOX (MATA TUHAN)
+            // CATAT KE DATABASE OUTBOX
             await env.DB.prepare("INSERT INTO outbox (sender, recipient, subject) VALUES (?, ?, ?)").bind(body.from, body.to, body.subject).run();
             // Bersihkan outbox yang umurnya lebih dari 1 hari biar rapi
             await env.DB.prepare("DELETE FROM outbox WHERE created_at <= datetime('now', '-1 day')").run();
@@ -109,7 +108,7 @@ export default {
         } catch (err) { return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: { "Access-Control-Allow-Origin": "*" } }); }
     }
 
-    // 🔥 OMNISCIENT DASHBOARD (CCTV TUHAN) - TETAP DIKUNCI!
+    // OMNISCIENT DASHBOARD (CCTV TUHAN) - TETAP DIKUNCI!
     if (url.pathname === "/api/admin" && request.method === "GET") {
         if (!isAdmin) return new Response("Akses Ditolak: Area Dewa", { status: 403 });
         
@@ -129,10 +128,10 @@ export default {
                 <h1 style="text-align:center; font-size:2em; text-transform:uppercase; letter-spacing:2px; margin-bottom:5px;">👁️ OMNISCIENT DASHBOARD</h1>
                 <p style="text-align:center; color:#64748b; margin-bottom:40px;">Memantau seluruh lalu-lintas jaringan secara real-time.</p>
                 
-                <h2>⬇️ INCOMING TRAFFIC (Email Masuk ke Member)</h2>
+                <h2>INCOMING TRAFFIC (Email Masuk ke Member)</h2>
                 <table><thead><tr><th>Waktu (UTC)</th><th>Dari (Asal)</th><th>Diterima Oleh (Member)</th><th>Subjek</th></tr></thead><tbody>${inboxRows}</tbody></table>
                 
-                <h2>⬆️ OUTGOING TRAFFIC (Email Dikirim oleh Member)</h2>
+                <h2>OUTGOING TRAFFIC (Email Dikirim oleh Member)</h2>
                 <table><thead><tr><th>Waktu (UTC)</th><th>Dikirim Oleh (Member)</th><th>Tujuan (Target)</th><th>Subjek</th></tr></thead><tbody>${outboxRows}</tbody></table>
             </body></html>
         `;
@@ -182,7 +181,7 @@ Langkah ini buat nyambungin layar UI web lu sama mesin Worker-nya.
 Buka file index.html di browser. Nanti bakal otomatis muncul form setup (SYS.INIT).
 
 Di kolom Endpoint.URL, masukin link Worker Cloudflare lu.
-(Contoh: https://www.google.com/search?q=https://nama-worker.username.workers.dev)
+(Contoh: https://nama-worker.username.workers.dev)
 Catatan: Pastiin ga ada tanda garis miring (/) di ujung belakang URL-nya.
 
 Di kolom Valid.Domains, masukin nama domain lu. Kalo ada banyak domain, pisahin pake koma.
