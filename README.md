@@ -10,7 +10,7 @@ Langkah pertama, lu harus update kode Worker lu biar jalan di mode Open API.
 3. Hapus semua kode yang lama, terus copas kode di bawah ini:
 
 ```javascript
-const ADMIN_KEY = "ARISE"; 
+const ADMIN_KEY = "ADMIN KEY KAMU"; 
 const RESEND_API_KEY = "MASUKIN RESEND API KEY KAMU"; 
 
 function extractPart(raw, type) {
